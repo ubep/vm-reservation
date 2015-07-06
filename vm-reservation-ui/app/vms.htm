@@ -1,0 +1,30 @@
+
+<div ng-controller="vmListController">
+
+<center>
+<table class="table" style="width:650px">
+
+<tr>
+<th>Host</th>
+<th>Status</th>
+<th>Description</th>
+<th>Contact</th>
+<th></th>
+</tr>
+
+<tr ng-repeat="vm in vms" class="stock">
+<td>{{vm.host}}</td>
+<td><span class="badge">{{vm.status}}</span></td>
+<td>{{vm.description}}</td>
+<td>{{vm.contact}}</td>
+<td>
+<button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="edit(vm.id)">
+<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+</button>
+</td>
+</tr>
+
+</table>
+</center>
+
+</div>

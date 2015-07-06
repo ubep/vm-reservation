@@ -1,0 +1,46 @@
+{
+  "vms": [
+    {
+      "host": "blueteam.epages.com",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    },
+    {
+      "host": "navyteam.epages.com",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    },
+    {
+      "host": "thirdparty.epages.com",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    },
+    {
+      "host": "thirdpartyrex.epages.com",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    },
+    {
+      "host": "thirdpartyspoon.epages.com",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    },
+    {
+      "host": "blueteam-vm-01.intern.epages.de",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    },
+    {
+      "host": "navyteam-vm-01.intern.epages.de",
+      "status": "free",
+      "description": "",
+      "contact": ""
+    }
+  ]
+}
