@@ -4,7 +4,7 @@ var sqlite3 = require("sqlite3").verbose()
 var restify = require('restify')
 
 
-var file = "vms.db"
+var file = "/opt/vm-reservation-backend/vms.db"
 var db = new sqlite3.Database(file)
 
 
@@ -88,9 +88,7 @@ server.put("/vms/:id", function(req, res, next) {
     if(host != 'undefined' && status != 'undefined' && description != 'undefined' && contact != 'undefined') {
       var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?) WHERE id='+id)
       updateStmt.run(host, status, description, contact, function(err) {
-        if (err == null) {
-          console.log("Updated vm successfully.")
-        } else {
+        if (err != null) {
           console.log("Error in updating vm: " + err)
         }
       });
