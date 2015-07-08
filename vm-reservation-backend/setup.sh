@@ -1,8 +1,8 @@
 #!/bin/bash
 
-/usr/local/bin/node /opt/vm-reservation-backend/setup_db.js
+node setup_db.js
 
-cp vmtool /etc/init.d/
+ln -s vmtool /etc/init.d/vmtool
 cd /etc/init.d/
 chmod 777 vmtool
 

@@ -4,7 +4,7 @@
 
 
 
-SERVER="/opt/vm-reservation-backend/index.js"
+SERVER="index.js"
 
 LOCK_FILE="/var/lock/subsys/vmtool"
 
