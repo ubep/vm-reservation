@@ -4,7 +4,7 @@
 
 
 
-SERVER="index.js"
+SERVER="SERVERPLACEHOLDER"
 
 LOCK_FILE="/var/lock/subsys/vmtool"
 
