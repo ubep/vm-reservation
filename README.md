@@ -16,15 +16,13 @@ install dependencies
 
 #### backend
 
-install dependencies
-
-	npm install
-
+to install dependencies,
 initialize sqlite database,
 creating service script
 and start service
+just run:
 
-	. setup.sh
+	. install.sh
 
 
 ### how to use 
