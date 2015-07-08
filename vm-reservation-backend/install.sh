@@ -4,7 +4,7 @@ npm install
 
 node setup_db.js
 
-export SERVERPATH=$(pwd)'/index.js'
+export SERVERPATH=$(pwd)
 sed "s=SERVERPLACEHOLDER=$SERVERPATH=g" vmtool.tmp > vmtool
 
 cp vmtool /etc/init.d/vmtool
