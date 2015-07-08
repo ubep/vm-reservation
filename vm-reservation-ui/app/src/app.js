@@ -1,6 +1,13 @@
 
 
+
 var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+
+
+
+app.constant('config', {
+  'endpoint': 'http://trident.vm-intern.epages.com:3000/'
+});
 
 
 
@@ -14,8 +21,8 @@ app.config(function($routeProvider) {
 
 
 
-app.controller('vmListController', function($scope, $http, $modal){ 
-  $http.get('http://trident.vm-intern.epages.com:3000/vms').then(function(result) {
+app.controller('vmListController', function(config, $scope, $http, $modal){ 
+  $http.get(config.endpoint+'vms').then(function(result) {
     vms = result.data.vms
 
     $scope.vms = vms
@@ -40,7 +47,7 @@ app.controller('vmListController', function($scope, $http, $modal){
         $scope.vms[id].description = vm.description
         $scope.vms[id].contact = vm.contact
 
-        $http.put('http://localhost:3000/vms/'+id, vm).success(function() {
+        $http.put(config.endpoint+'vms/'+id, vm).success(function() {
           console.log("update vm: " + vm)
         })
       })
