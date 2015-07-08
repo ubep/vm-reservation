@@ -4,15 +4,15 @@
 
 
 
-SERVER="/opt/vm-reservation-backend/index.js"
+SERVER="SERVERPLACEHOLDER"
 
 LOCK_FILE="/var/lock/subsys/vmtool"
 
 do_start()
 {
         if [ ! -f "$LOCK_FILE" ] ; then
-                echo -n $"Starting $SERVER: "
-                runuser -l "root" -c "node $SERVER &" && echo_success || echo_failure
+                echo -n $"Starting VM Reservation Tool: "
+                runuser -l "root" -c "cd $SERVER && node index.js &" && echo_success || echo_failure
                 RETVAL=$?
                 echo
                 [ $RETVAL -eq 0 ] && touch $LOCK_FILE
@@ -23,8 +23,8 @@ do_start()
 }
 do_stop()
 {
-        echo -n $"Stopping $SERVER: "
-        pid=`ps -aefw | grep "node $SERVER" | grep -v " grep " | awk '{print $2}'`
+        echo -n $"Stopping VM Reservation Tool: "
+        pid=`ps -aefw | grep "node index.js" | grep -v " grep " | awk '{print $2}'`
         kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
         RETVAL=$?
         echo

@@ -4,7 +4,7 @@ var sqlite3 = require("sqlite3").verbose()
 var restify = require('restify')
 
 
-var file = "/opt/vm-reservation-backend/vms.db"
+var file = "vms.db"
 var db = new sqlite3.Database(file)
 
 
