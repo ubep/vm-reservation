@@ -33,7 +33,8 @@ server.get("/vms", function(req, res, next) {
           "host": row.host,
           "status": row.status,
           "description": row.description,
-          "contact": row.contact
+          "contact": row.contact,
+          "systeminfo": row.systeminfo
         })
       },
       function (err, cntx) {
@@ -60,7 +61,8 @@ server.get("/vms/:host", function(req, res, next) {
           "host": row.host,
           "status": row.status,
           "description": row.description,
-          "contact": row.contact
+          "contact": row.contact,
+          "systeminfo": row.systeminfo
         }
       },
       function (err, cntx) {
@@ -83,11 +85,12 @@ server.put("/vms/:id", function(req, res, next) {
   var status = vm.status
   var description = vm.description
   var contact = vm.contact
+  var systeminfo = vm.systeminfo
 
   if(sid != 'undefined' && sid == id) {
     if(host != 'undefined' && status != 'undefined' && description != 'undefined' && contact != 'undefined') {
-      var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?) WHERE id='+id)
-      updateStmt.run(host, status, description, contact, function(err) {
+      var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?) WHERE id='+id)
+      updateStmt.run(host, status, description, contact, systeminfo, function(err) {
         if (err != null) {
           console.log("Error in updating vm: " + err)
         }
@@ -100,8 +103,10 @@ server.put("/vms/:id", function(req, res, next) {
 
 var port = 3000
 server.listen(port, function (err) {
-    if (err)
+    if (err) {
         console.error(err)
-    else
-        console.log('App is ready at : ' + port)
+        return 1
+    } else {
+        return 0
+    }
 })

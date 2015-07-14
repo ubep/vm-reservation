@@ -4,43 +4,50 @@
       "host": "blueteam.epages.com",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     },
     {
       "host": "navyteam.epages.com",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     },
     {
       "host": "thirdparty.epages.com",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     },
     {
       "host": "thirdpartyrex.epages.com",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     },
     {
       "host": "thirdpartyspoon.epages.com",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     },
     {
       "host": "blueteam-vm-01.intern.epages.de",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     },
     {
       "host": "navyteam-vm-01.intern.epages.de",
       "status": "free",
       "description": "",
-      "contact": ""
+      "contact": "",
+      "systeminfo": ""
     }
   ]
 }
