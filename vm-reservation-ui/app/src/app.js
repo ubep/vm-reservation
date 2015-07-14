@@ -46,6 +46,7 @@ app.controller('vmListController', function(config, $scope, $http, $modal){
         $scope.vms[id].status = vm.status
         $scope.vms[id].description = vm.description
         $scope.vms[id].contact = vm.contact
+        $scope.vms[id].systeminfo = vm.systeminfo
 
         $http.put(config.endpoint+'vms/'+id, vm).success(function() {
           console.log("update vm: " + vm)
@@ -65,7 +66,8 @@ app.controller('editVMController', function($scope, $modalInstance, selectedVM) 
     "host": selectedVM.host,
     "status": selectedVM.status,
     "description": selectedVM.description,
-    "contact": selectedVM.contact
+    "contact": selectedVM.contact,
+    "systeminfo": selectedVM.systeminfo
   };
 
   $scope.save = function () {
