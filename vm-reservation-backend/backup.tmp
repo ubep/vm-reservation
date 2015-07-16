@@ -1,0 +1,6 @@
+#!/bin/sh
+
+SERVER="SERVERPLACEHOLDER"
+cd $SERVER
+
+/usr/local/bin/node backup.js
