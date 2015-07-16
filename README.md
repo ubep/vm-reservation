@@ -32,3 +32,8 @@ you can start or stop the service using:
 
 	service vmtool start
 	service vmtool stop
+
+
+### backups
+
+to create backups on a regular basis, add *backup.sh* to the crontab.
