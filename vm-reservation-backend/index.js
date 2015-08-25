@@ -20,8 +20,6 @@ server.use(
   }
 )
 
-
-
 server.get("/vms", function(req, res, next) {
   var vms = []
 
@@ -34,7 +32,8 @@ server.get("/vms", function(req, res, next) {
           "status": row.status,
           "description": row.description,
           "contact": row.contact,
-          "systeminfo": row.systeminfo
+          "systeminfo": row.systeminfo,
+          "bookingtime": row.bookingtime
         })
       },
       function (err, cntx) {
@@ -62,7 +61,8 @@ server.get("/vms/:host", function(req, res, next) {
           "status": row.status,
           "description": row.description,
           "contact": row.contact,
-          "systeminfo": row.systeminfo
+          "systeminfo": row.systeminfo,
+          "bookingtime": row.bookingtime
         }
       },
       function (err, cntx) {
@@ -77,6 +77,7 @@ server.get("/vms/:host", function(req, res, next) {
 
 
 server.put("/vms/:id", function(req, res, next) {
+  
   var id = req.params.id
   var vm = req.body
 
@@ -86,11 +87,13 @@ server.put("/vms/:id", function(req, res, next) {
   var description = vm.description
   var contact = vm.contact
   var systeminfo = vm.systeminfo
-
+  var bookingtime = vm.bookingtime
+  
   if(sid != 'undefined' && sid == id) {
     if(host != 'undefined' && status != 'undefined' && description != 'undefined' && contact != 'undefined') {
-      var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?) WHERE id='+id)
-      updateStmt.run(host, status, description, contact, systeminfo, function(err) {
+        
+      var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?), bookingtime=(?) WHERE id='+id)
+      updateStmt.run(host, status, description, contact, systeminfo, bookingtime, function(err) {
         if (err != null) {
           console.log("Error in updating vm: " + err)
         }
