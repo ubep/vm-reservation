@@ -6,7 +6,7 @@ var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstr
 
 
 app.constant('config', {
-  'endpoint': 'http://trident.vm-intern.epages.com:3000/',
+  'endpoint': 'http://trident.vm-intern.epages.com:3000/'
 });
 
 
@@ -23,16 +23,16 @@ app.config(function($routeProvider) {
 
 function getBookingAgeInDays(bookingDateInMs) {
 
-    var onDayInMillisecounds = (24*60*60*1000);
-    var currentDate = new Date();
+    var onDayInMillisecounds = (24*60*60*1000)
+    var currentDate = new Date()
     
     if(currentDate.getTime() <= bookingDateInMs)
     {
-        return 0;
+        return 0
     }
     
-    var inUseForDays = Math.round(Math.abs((currentDate.getTime() - bookingDateInMs) / onDayInMillisecounds));
-    return inUseForDays;
+    var inUseForDays = Math.round(Math.abs((currentDate.getTime() - bookingDateInMs) / onDayInMillisecounds))
+    return inUseForDays
 }
 
 
@@ -40,13 +40,13 @@ function getBookingAgeInDays(bookingDateInMs) {
 function prepareBookingDate(vm) {
     if(vm.status == "free")
     {
-        vm.bookingDate = '';
-        vm.inUseForDays = '';
+        vm.bookingDate = ''
+        vm.inUseForDays = ''
     }
     else
     {
-        vm.bookingDate = Date.parse(vm.bookingtime);
-        vm.inUseForDays = getBookingAgeInDays(vm.bookingDate);
+        vm.bookingDate = Date.parse(vm.bookingtime)
+        vm.inUseForDays = getBookingAgeInDays(vm.bookingDate)
     }
 }
 
@@ -58,7 +58,7 @@ app.controller('vmListController', function(config, $scope, $http, $modal){
 
     for(var i=0; i<vms.length; i++)
     {
-        prepareBookingDate(vms[i]);
+        prepareBookingDate(vms[i])
     }
     
     $scope.vms = vms
@@ -79,10 +79,10 @@ app.controller('vmListController', function(config, $scope, $http, $modal){
 
       modalInstance.result.then(function (vm) {
 
-        var currentDate = new Date();
-        vm.bookingtime = currentDate.toString();
+        var currentDate = new Date()
+        vm.bookingtime = currentDate.toString()
         
-        prepareBookingDate(vm);
+        prepareBookingDate(vm)
         
         $scope.vms[id].host = vm.host
         $scope.vms[id].status = vm.status
@@ -91,7 +91,7 @@ app.controller('vmListController', function(config, $scope, $http, $modal){
         $scope.vms[id].systeminfo = vm.systeminfo
         $scope.vms[id].bookingDate = vm.bookingDate
         $scope.vms[id].bookingtime = vm.bookingtime
-        $scope.vms[id].inUseForDays = vm.inUseForDays;
+        $scope.vms[id].inUseForDays = vm.inUseForDays
 
         $http.put(config.endpoint+'vms/'+id, vm).success(function() {
           console.log("update vm: " + vm)
