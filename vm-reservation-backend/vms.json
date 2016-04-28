@@ -48,6 +48,20 @@
       "description": "",
       "contact": "",
       "systeminfo": ""
+    },
+    {
+      "host": "nostrum.vm-intern.epages.com",
+      "status": "free",
+      "description": "",
+      "contact": "",
+      "systeminfo": ""
+    },
+    {
+      "host": "ocean-test.epages.systems",
+      "status": "free",
+      "description": "",
+      "contact": "",
+      "systeminfo": ""
     }
   ]
 }
