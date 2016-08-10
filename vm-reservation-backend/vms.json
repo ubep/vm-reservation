@@ -76,6 +76,20 @@
       "description": "",
       "contact": "",
       "systeminfo": ""
+    },
+    {
+      "host": "hamburg.epages.systems",
+      "status": "free",
+      "description": "",
+      "contact": "",
+      "systeminfo": ""
+    },
+    {
+      "host": "barcelona.epages.systems",
+      "status": "free",
+      "description": "",
+      "contact": "",
+      "systeminfo": ""
     }
   ]
 }
