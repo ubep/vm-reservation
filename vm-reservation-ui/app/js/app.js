@@ -6,7 +6,7 @@ var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstr
 
 
 app.constant('config', {
-  'endpoint': 'http://trident.vm-intern.epages.com:3000/'
+  'endpoint': 'http://localhost:3000/'
 });
 
 
@@ -17,21 +17,21 @@ app.config(function($routeProvider) {
       templateUrl : 'vms.htm',
       controller  : 'vmListController'
     })
-});	
+});
 
 
 
 function getBookingAgeInDays(bookingDateInMs) {
 
-    var onDayInMillisecounds = (24*60*60*1000)
+    var oneDayInMillisecounds = (24*60*60*1000)
     var currentDate = new Date()
-    
+
     if(currentDate.getTime() <= bookingDateInMs)
     {
         return 0
     }
-    
-    var inUseForDays = Math.round(Math.abs((currentDate.getTime() - bookingDateInMs) / onDayInMillisecounds))
+
+    var inUseForDays = Math.round(Math.abs((currentDate.getTime() - bookingDateInMs) / oneDayInMillisecounds))
     return inUseForDays
 }
 
@@ -52,7 +52,7 @@ function prepareBookingDate(vm) {
 
 
 
-app.controller('vmListController', function(config, $scope, $http, $modal){ 
+app.controller('vmListController', function(config, $scope, $http, $modal){
   $http.get(config.endpoint+'vms').then(function(result) {
     vms = result.data.vms
 
@@ -60,7 +60,7 @@ app.controller('vmListController', function(config, $scope, $http, $modal){
     {
         prepareBookingDate(vms[i])
     }
-    
+
     $scope.vms = vms
 
     $scope.edit = function (id) {
@@ -81,9 +81,9 @@ app.controller('vmListController', function(config, $scope, $http, $modal){
 
         var currentDate = new Date()
         vm.bookingtime = currentDate.toString()
-        
+
         prepareBookingDate(vm)
-        
+
         $scope.vms[id].host = vm.host
         $scope.vms[id].status = vm.status
         $scope.vms[id].description = vm.description

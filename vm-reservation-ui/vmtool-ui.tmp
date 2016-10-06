@@ -2,17 +2,15 @@
 
 . /etc/rc.d/init.d/functions
 
-
-
 SERVER="SERVERPLACEHOLDER"
 
-LOCK_FILE="/var/lock/subsys/vmtool"
+LOCK_FILE="/var/lock/subsys/vmtool-ui"
 
 do_start()
 {
         if [ ! -f "$LOCK_FILE" ] ; then
-                echo -n $"Starting VM Reservation Tool: "
-                runuser -l "root" -c "cd $SERVER && node index.js &" && echo_success || echo_failure
+                echo -n $"Starting VM Reservation Tool UI: "
+                runuser -l "root" -c "cd $SERVER && node static-server.js &" && echo_success || echo_failure
                 RETVAL=$?
                 echo
                 [ $RETVAL -eq 0 ] && touch $LOCK_FILE
@@ -23,8 +21,8 @@ do_start()
 }
 do_stop()
 {
-        echo -n $"Stopping VM Reservation Tool: "
-        pid=`ps -aefw | grep "node index.js" | grep -v " grep " | awk '{print $2}'`
+        echo -n $"Stopping VM Reservation Tool UI: "
+        pid=`ps -aefw | grep "node static-server.js" | grep -v " grep " | awk '{print $2}'`
         kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
         RETVAL=$?
         echo
