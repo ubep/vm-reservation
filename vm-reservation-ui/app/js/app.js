@@ -6,7 +6,7 @@ var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstr
 
 
 app.constant('config', {
-  'endpoint': 'http://localhost:3000/'
+  'endpoint': 'http://127.0.0.1:3000/'
 });
 
 
