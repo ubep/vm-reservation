@@ -35,12 +35,17 @@ function prepareBookingDate(vm) {
     }
 }
 
+function prepareFacts(vm) {
+    vm.ansible_facts = JSON.parse(vm.ansible_facts)
+}
+
 app.controller('vmListController', function(config, $scope, $http, $modal) {
     $http.get(config.endpoint + 'vms').then(function(result) {
         vms = result.data.vms
 
         for (var i = 0; i < vms.length; i++) {
             prepareBookingDate(vms[i])
+            prepareFacts(vms[i])
         }
 
         $scope.vms = vms

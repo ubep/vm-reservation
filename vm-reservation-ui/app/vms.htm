@@ -31,11 +31,11 @@
 
                     <table width="100%">
                         <tr>
-                            <td valign="top" width="120px">Description:</td>
+                            <td valign="top" width="150px">Description:</td>
                             <td valign="top">{{vm.description}}</td>
                         </tr>
                         <tr>
-                            <td valign="top" width="120px">Booking Date:</td>
+                            <td valign="top">Booking Date:</td>
                             <td>
                                 <div ng-if="vm.status!='free'">
                                     {{vm.bookingDate | date:'dd-MM-yyyy'}} ({{vm.inUseForDays}} Days ago)
@@ -43,13 +43,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top" width="120px">Installation Info:</td>
+                            <td valign="top">Operating System:</td>
+                            <td valign="top">{{vm.ansible_facts.ansible_distribution}} {{vm.ansible_facts.ansible_distribution_version}}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Installation Info:</td>
                             <td valign="top">{{vm.systeminfo}}</td>
                         </tr>
                     </table>
 
                 </div>
-                <div class="panel-footer"></div>
             </div>
         </div>
     </center>
