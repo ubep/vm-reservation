@@ -10,7 +10,7 @@ export SERVERPATH=$(pwd)
 sed "s=SERVERPLACEHOLDER=$SERVERPATH=g" vmtool.tmp > vmtool
 sed "s=SERVERPLACEHOLDER=$SERVERPATH=g" backup.tmp > backup.sh
 
-cp vmtool /etc/init.d/vmtool
+mv vmtool /etc/init.d/vmtool
 chmod 777 /etc/init.d/vmtool
 
 service vmtool start

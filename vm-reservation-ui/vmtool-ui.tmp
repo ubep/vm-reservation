@@ -3,7 +3,6 @@
 . /etc/rc.d/init.d/functions
 
 SERVER="SERVERPLACEHOLDER"
-
 LOCK_FILE="/var/lock/subsys/vmtool-ui"
 
 do_start()
@@ -19,6 +18,7 @@ do_start()
                 RETVAL=1
         fi
 }
+
 do_stop()
 {
         echo -n $"Stopping VM Reservation Tool UI: "
