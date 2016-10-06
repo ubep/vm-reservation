@@ -36,7 +36,12 @@ function prepareBookingDate(vm) {
 }
 
 function prepareFacts(vm) {
-    vm.ansible_facts = JSON.parse(vm.ansible_facts)
+    try {
+      vm.ansible_facts = JSON.parse(vm.ansible_facts)
+    } catch (e) {
+        console.log(e)
+    }
+
 }
 
 app.controller('vmListController', function(config, $scope, $http, $modal) {
