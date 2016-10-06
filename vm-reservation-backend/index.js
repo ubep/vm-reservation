@@ -10,6 +10,7 @@ server.use(restify.fullResponse())
 server.use(restify.bodyParser({
     mapParams: true
 }))
+server.use(restify.queryParser());
 
 server.use(
     function crossOrigin(req, res, next) {
@@ -31,7 +32,8 @@ server.get("/vms", function(req, res, next) {
                 "description": row.description,
                 "contact": row.contact,
                 "systeminfo": row.systeminfo,
-                "bookingtime": row.bookingtime
+                "bookingtime": row.bookingtime,
+                "ansible_facts": row.ansible_facts
             })
         }, function(err, cntx) {
             res.json({
@@ -54,7 +56,8 @@ server.get("/vms/:host", function(req, res, next) {
                 "description": row.description,
                 "contact": row.contact,
                 "systeminfo": row.systeminfo,
-                "bookingtime": row.bookingtime
+                "bookingtime": row.bookingtime,
+                "ansible_facts": row.ansible_facts
             }
         }, function(err, cntx) {
             res.json(vm)
@@ -74,12 +77,13 @@ server.put("/vms/:id", function(req, res, next) {
     var contact = vm.contact
     var systeminfo = vm.systeminfo
     var bookingtime = vm.bookingtime
+    var ansible_facts = vm.ansible_facts
 
     if (sid != 'undefined' && sid == id) {
         if (host != 'undefined' && status != 'undefined' && description != 'undefined' && contact != 'undefined') {
 
-            var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?), bookingtime=(?) WHERE id=' + id)
-            updateStmt.run(host, status, description, contact, systeminfo, bookingtime, function(err) {
+            var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?), bookingtime=(?), ansible_facts=(?) WHERE id=(?)')
+            updateStmt.run(host, status, description, contact, systeminfo, bookingtime, ansible_facts, id, function(err) {
                 if (err != null) {
                     console.log("Error in updating vm: " + err)
                 }
@@ -88,9 +92,22 @@ server.put("/vms/:id", function(req, res, next) {
     }
 })
 
-server.get(/.*/, restify.serveStatic({
-    directory: '../vm-reservation-ui/app/src'
-}));
+server.put('/vms', function(req, res, next) {
+    var payload = req.body
+
+    if (payload) {
+      var facts = payload['ansible_facts']
+      var host = facts['ansible_fqdn']
+
+      var updateStmt = db.prepare('UPDATE vms SET ansible_facts=(?) WHERE host=(?)')
+      updateStmt.run(JSON.stringify(facts), host, function(err) {
+          if (err != null) {
+              console.log("Error in updating vm: " + err)
+          }
+      })
+    }
+    res.end()
+})
 
 var port = 3000
 server.listen(port, function(err) {
