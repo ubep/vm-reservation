@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "db-migrate": "^0.9.26",
     "fs": "0.0.2",
     "restify": "^3.0.2",
     "sqlite3": "^3.0.8"
