@@ -1,7 +1,7 @@
 #!/bin/bash
 
 npm install
-bower install
+node_modules/bower/bin/bower install
 
 export SERVERPATH=$(pwd)
 sed "s=SERVERPLACEHOLDER=$SERVERPATH=g" vmtool-ui.tmp > vmtool-ui
