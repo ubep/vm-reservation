@@ -1,33 +1,23 @@
-
-
-
 var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstrap'])
 
-
-
 app.constant('config', {
-  'endpoint': 'http://127.0.0.1:3000/'
+    'endpoint': 'http://teamred-jenkins.vm-intern.epages.com:3000/'
 });
-
-
 
 app.config(function($routeProvider) {
-  $routeProvider
-    .when('/', {
-      templateUrl : 'vms.htm',
-      controller  : 'vmListController'
-    })
+    $routeProvider
+        .when('/', {
+            templateUrl: 'vms.htm',
+            controller: 'vmListController'
+        })
 });
-
-
 
 function getBookingAgeInDays(bookingDateInMs) {
 
-    var oneDayInMillisecounds = (24*60*60*1000)
+    var oneDayInMillisecounds = (24 * 60 * 60 * 1000)
     var currentDate = new Date()
 
-    if(currentDate.getTime() <= bookingDateInMs)
-    {
+    if (currentDate.getTime() <= bookingDateInMs) {
         return 0
     }
 
@@ -35,93 +25,83 @@ function getBookingAgeInDays(bookingDateInMs) {
     return inUseForDays
 }
 
-
-
 function prepareBookingDate(vm) {
-    if(vm.status == "free")
-    {
+    if (vm.status == "free") {
         vm.bookingDate = ''
         vm.inUseForDays = ''
-    }
-    else
-    {
+    } else {
         vm.bookingDate = Date.parse(vm.bookingtime)
         vm.inUseForDays = getBookingAgeInDays(vm.bookingDate)
     }
 }
 
+app.controller('vmListController', function(config, $scope, $http, $modal) {
+    $http.get(config.endpoint + 'vms').then(function(result) {
+        vms = result.data.vms
 
-
-app.controller('vmListController', function(config, $scope, $http, $modal){
-  $http.get(config.endpoint+'vms').then(function(result) {
-    vms = result.data.vms
-
-    for(var i=0; i<vms.length; i++)
-    {
-        prepareBookingDate(vms[i])
-    }
-
-    $scope.vms = vms
-
-    $scope.edit = function (id) {
-      var vm = vms[id]
-
-      var modalInstance = $modal.open({
-        animation: true,
-        templateUrl: 'edit.htm',
-        controller: 'editVMController',
-        resolve: {
-          selectedVM: function () {
-            return vm
-          }
+        for (var i = 0; i < vms.length; i++) {
+            prepareBookingDate(vms[i])
         }
-      })
 
-      modalInstance.result.then(function (vm) {
+        $scope.vms = vms
 
-        var currentDate = new Date()
-        vm.bookingtime = currentDate.toString()
+        $scope.edit = function(id) {
+            var vm = vms[id]
 
-        prepareBookingDate(vm)
+            var modalInstance = $modal.open({
+                animation: true,
+                templateUrl: 'edit.htm',
+                controller: 'editVMController',
+                resolve: {
+                    selectedVM: function() {
+                        return vm
+                    }
+                }
+            })
 
-        $scope.vms[id].host = vm.host
-        $scope.vms[id].status = vm.status
-        $scope.vms[id].description = vm.description
-        $scope.vms[id].contact = vm.contact
-        $scope.vms[id].systeminfo = vm.systeminfo
-        $scope.vms[id].bookingDate = vm.bookingDate
-        $scope.vms[id].bookingtime = vm.bookingtime
-        $scope.vms[id].inUseForDays = vm.inUseForDays
+            modalInstance.result.then(function(vm) {
 
-        $http.put(config.endpoint+'vms/'+id, vm).success(function() {
-          console.log("update vm: " + vm)
-        })
-      })
+                var currentDate = new Date()
+                vm.bookingtime = currentDate.toString()
 
-    }
+                prepareBookingDate(vm)
 
-  })
+                $scope.vms[id].host = vm.host
+                $scope.vms[id].status = vm.status
+                $scope.vms[id].description = vm.description
+                $scope.vms[id].contact = vm.contact
+                $scope.vms[id].systeminfo = vm.systeminfo
+                $scope.vms[id].bookingDate = vm.bookingDate
+                $scope.vms[id].bookingtime = vm.bookingtime
+                $scope.vms[id].inUseForDays = vm.inUseForDays
+
+                $http.put(config.endpoint + 'vms/' + id, vm).success(function() {
+                    console.log("update vm: " + vm)
+                })
+            })
+
+        }
+
+    })
 })
-
-
 
 app.controller('editVMController', function($scope, $modalInstance, selectedVM) {
 
-  $scope.vm = {
-    "id": selectedVM.id,
-    "host": selectedVM.host,
-    "status": selectedVM.status,
-    "description": selectedVM.description,
-    "contact": selectedVM.contact,
-    "systeminfo": selectedVM.systeminfo
-  };
+    $scope.vm = {
+        "id": selectedVM.id,
+        "host": selectedVM.host,
+        "status": selectedVM.status,
+        "description": selectedVM.description,
+        "contact": selectedVM.contact,
+        "systeminfo": selectedVM.systeminfo
+    };
 
-  $scope.save = function () {
-    $scope.selectedVM
-    $modalInstance.close($scope.vm)
-  }
+    $scope.save = function() {
+        $scope.selectedVM
+        $modalInstance.close($scope.vm)
+    }
 
-  $scope.close = function () {
-    $modalInstance.dismiss('cancel')
-  }
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel')
+    }
 });
