@@ -1,95 +1,51 @@
 {
-  "vms": [
-    {
-      "host": "blueteam.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "navyteam.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "thirdparty.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "thirdpartyrex.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "thirdpartyspoon.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "blueteam-vm-01.intern.epages.de",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "navyteam-vm-01.intern.epages.de",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "nostrum.vm-intern.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "ocean-test.epages.systems",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "teamocean-wording.epages.com",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "ocean-unity.epages.systems",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "hamburg.epages.systems",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    },
-    {
-      "host": "barcelona.epages.systems",
-      "status": "free",
-      "description": "",
-      "contact": "",
-      "systeminfo": ""
-    }
-  ]
+    "vms": [{
+        "host": "epagesj-vm05.intern.epages.de",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm06.intern.epages.de",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm07.intern.epages.de",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm08.intern.epages.de",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm09.vm-intern.epages.com",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm10.vm-intern.epages.com",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm11.vm-intern.epages.com",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }, {
+        "host": "epagesj-vm12.vm-intern.epages.com",
+        "status": "free",
+        "description": "",
+        "contact": "",
+        "systeminfo": ""
+    }]
 }
