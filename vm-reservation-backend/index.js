@@ -80,10 +80,14 @@ server.put('/vms/:id', function(req, res, next) {
     if (sid != 'undefined' && sid == id) {
         if (host != 'undefined' && status != 'undefined' && description != 'undefined' && contact != 'undefined') {
             var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?), bookingtime=(?) WHERE id=(?)')
-            updateStmt.run(host, status, description, contact, systeminfo, bookingtime, ansible_facts, id, function(err) {
+            updateStmt.run(host, status, description, contact, systeminfo, bookingtime, id, function(err) {
                 if (err != null) {
                     console.log('Error in updating vm: ' + err)
+                    res.status(400)
+                } else {
+                    res.status(204)
                 }
+                res.end()
             })
         }
     }
@@ -93,16 +97,19 @@ server.put('/vms', function(req, res, next) {
     var payload = req.body
 
     if (payload) {
-      var facts = payload['ansible_facts']
-      var host = facts['ansible_fqdn']
-      var updateStmt = db.prepare('UPDATE vms SET ansible_facts=(?) WHERE host=(?)')
-      updateStmt.run(JSON.stringify(facts), host, function(err) {
-          if (err != null) {
-              console.log('Error in updating vm: ' + err)
-          }
-      })
+        var facts = payload['ansible_facts']
+        var host = facts['ansible_fqdn']
+        var updateStmt = db.prepare('UPDATE vms SET ansible_facts=(?) WHERE host=(?)')
+        updateStmt.run(JSON.stringify(facts), host, function(err) {
+            if (err != null) {
+                console.log('Error in updating vm: ' + err)
+                res.status(400)
+            } else {
+                res.status(204)
+            }
+            res.end()
+        })
     }
-    res.end()
 })
 
 var port = 3000
