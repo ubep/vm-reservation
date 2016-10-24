@@ -78,7 +78,7 @@ app.controller('vmListController', function(config, $scope, $http, $modal) {
                 vmToUpdate.inUseForDays = vm.inUseForDays
                 vmToUpdate.ansible_facts = vm.ansible_facts
                 $http.put(config.endpoint + 'vms/' + id, vm).success(function() {
-                    console.log('update vm: ' + vm)
+                    console.log('Updated VM info', vm)
                 })
             })
         }
