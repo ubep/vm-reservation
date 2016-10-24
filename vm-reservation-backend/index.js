@@ -22,7 +22,6 @@ server.use(
 
 server.get('/vms', function(req, res, next) {
     var vms = []
-
     db.serialize(function() {
         db.each('SELECT * FROM vms', function(err, row) {
             vms.push({
