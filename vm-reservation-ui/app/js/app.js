@@ -1,32 +1,28 @@
 var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstrap'])
 
 app.constant('config', {
-    'endpoint': 'http://teamred-jenkins.vm-intern.epages.com:3000/'
-});
+    endpoint: 'http://localhost:3000/'
+})
 
 app.config(function($routeProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: 'vms.htm',
-            controller: 'vmListController'
-        })
-});
+    $routeProvider.when('/', {
+        templateUrl: 'vms.htm',
+        controller: 'vmListController'
+    })
+})
 
 function getBookingAgeInDays(bookingDateInMs) {
-
     var oneDayInMillisecounds = (24 * 60 * 60 * 1000)
     var currentDate = new Date()
-
     if (currentDate.getTime() <= bookingDateInMs) {
         return 0
     }
-
     var inUseForDays = Math.round(Math.abs((currentDate.getTime() - bookingDateInMs) / oneDayInMillisecounds))
     return inUseForDays
 }
 
 function prepareBookingDate(vm) {
-    if (vm.status == "free") {
+    if ('free' == vm.status) {
         vm.bookingDate = ''
         vm.inUseForDays = ''
     } else {
@@ -37,17 +33,15 @@ function prepareBookingDate(vm) {
 
 function prepareFacts(vm) {
     try {
-      vm.ansible_facts = JSON.parse(vm.ansible_facts)
+        vm.ansible_facts = JSON.parse(vm.ansible_facts)
     } catch (e) {
         console.log(e)
     }
-
 }
 
 app.controller('vmListController', function(config, $scope, $http, $modal) {
     $http.get(config.endpoint + 'vms').then(function(result) {
         vms = result.data.vms
-
         for (var i = 0; i < vms.length; i++) {
             prepareBookingDate(vms[i])
             prepareFacts(vms[i])
@@ -57,7 +51,6 @@ app.controller('vmListController', function(config, $scope, $http, $modal) {
 
         $scope.edit = function(id) {
             var vm = vms[id]
-
             var modalInstance = $modal.open({
                 animation: true,
                 templateUrl: 'edit.htm',
@@ -70,41 +63,38 @@ app.controller('vmListController', function(config, $scope, $http, $modal) {
             })
 
             modalInstance.result.then(function(vm) {
-
                 var currentDate = new Date()
                 vm.bookingtime = currentDate.toString()
-
                 prepareBookingDate(vm)
-
-                $scope.vms[id].host = vm.host
-                $scope.vms[id].status = vm.status
-                $scope.vms[id].description = vm.description
-                $scope.vms[id].contact = vm.contact
-                $scope.vms[id].systeminfo = vm.systeminfo
-                $scope.vms[id].bookingDate = vm.bookingDate
-                $scope.vms[id].bookingtime = vm.bookingtime
-                $scope.vms[id].inUseForDays = vm.inUseForDays
-
+                var vmToUpdate = $scope.vms[id]
+                vmToUpdate.host = vm.host
+                vmToUpdate.status = vm.status
+                vmToUpdate.description = vm.description
+                vmToUpdate.contact = vm.contact
+                vmToUpdate.systeminfo = vm.systeminfo
+                vmToUpdate.bookingDate = vm.bookingDate
+                vmToUpdate.bookingtime = vm.bookingtime
+                vmToUpdate.inUseForDays = vm.inUseForDays
+                vmToUpdate.ansible_facts = vm.ansible_facts
                 $http.put(config.endpoint + 'vms/' + id, vm).success(function() {
-                    console.log("update vm: " + vm)
+                    console.log('update vm: ' + vm)
                 })
             })
-
         }
-
     })
 })
 
 app.controller('editVMController', function($scope, $modalInstance, selectedVM) {
 
     $scope.vm = {
-        "id": selectedVM.id,
-        "host": selectedVM.host,
-        "status": selectedVM.status,
-        "description": selectedVM.description,
-        "contact": selectedVM.contact,
-        "systeminfo": selectedVM.systeminfo
-    };
+        id: selectedVM.id,
+        host: selectedVM.host,
+        status: selectedVM.status,
+        description: selectedVM.description,
+        contact: selectedVM.contact,
+        systeminfo: selectedVM.systeminfo,
+        ansible_facts: selectedVM.ansible_facts
+    }
 
     $scope.save = function() {
         $scope.selectedVM
@@ -114,4 +104,4 @@ app.controller('editVMController', function($scope, $modalInstance, selectedVM) 
     $scope.close = function() {
         $modalInstance.dismiss('cancel')
     }
-});
+})

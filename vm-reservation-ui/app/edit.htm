@@ -3,61 +3,50 @@ we don't need a reference to the controller here.
 this is already done by the $modal.open(...);
 src: http://stackoverflow.com/questions/22055700/how-to-inject-modalinstance-inside-a-controller
 -->
-
 <style>
-td {
-     vertical-align: top;
-     padding: 5px;
-}
+    td {
+        vertical-align: top;
+        padding: 5px;
+    }
 </style>
 
 <center>
-
-<h3>book your VM!</h3>
-<hr>
-
-<table style="width:400px">
-
-<tr>
-<td>Host</td>
-<td>{{vm.host}}</td>
-</tr>
-
-<tr>
-<td>Status</td>
-<td>
-<select name="top5" class="form-control" ng-model="vm.status" size="1">
-<option>free</option>
-<option>in use</option>
-<option>out of order</option>
-</select>
-</td>
-</tr>
-
-<tr>
-<td>Description</td>
-<td><textarea rows="4" cols="50" class="form-control" ng-model="vm.description" style="resize: none;"/></td>
-</tr>
-
-<tr>
-<td>Contact</td>
-<td><input type="text" class="form-control" ng-model="vm.contact" /></td>
-</tr>
-
-<tr>
-<td>Installation Info</td>
-<td><input type="text" class="form-control" ng-model="vm.systeminfo" /></td>
-</tr>
-
-</table>
-
-<br>
-<button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="save()">
+    <h3>book your VM!</h3>
+    <hr>
+    <table style="width:400px">
+        <tr>
+            <td>Host</td>
+            <td>{{vm.host}}</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>
+                <select name="top5" class="form-control" ng-model="vm.status" size="1">
+                    <option>free</option>
+                    <option>in use</option>
+                    <option>out of order</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><textarea rows="4" cols="50" class="form-control" ng-model="vm.description" style="resize: none;" /></td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td><input type="text" class="form-control" ng-model="vm.contact" /></td>
+        </tr>
+        <tr>
+            <td>Installation Info</td>
+            <td><input type="text" class="form-control" ng-model="vm.systeminfo" /></td>
+        </tr>
+    </table>
+    <br>
+    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="save()">
 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 </button>
-<button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="close()">
+    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="close()">
 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 </button>
-
-<br><br>
+    <br><br>
 </center>
