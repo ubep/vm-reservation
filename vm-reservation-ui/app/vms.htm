@@ -29,7 +29,7 @@
                     <hr />
                     <table width="100%">
                         <tr>
-                            <td valign="top" width="150px">Description:</td>
+                            <td valign="top" width="125px">Description:</td>
                             <td valign="top">{{vm.description}}</td>
                         </tr>
                         <tr>
@@ -41,12 +41,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top">Operating System:</td>
-                            <td valign="top">{{vm.ansible_facts.ansible_distribution}} {{vm.ansible_facts.ansible_distribution_version}}</td>
-                        </tr>
-                        <tr>
                             <td valign="top">Installation Info:</td>
                             <td valign="top">{{vm.systeminfo}}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Facts:</td>
+                            <td valign="top">
+                                {{vm.ansible_facts.ansible_distribution}} {{vm.ansible_facts.ansible_distribution_version}},
+                                {{vm.ansible_facts.ansible_memtotal_mb}} MB RAM,
+                                {{vm.ansible_facts.ansible_processor_vcpus}} CPUs
+                            </td>
                         </tr>
                     </table>
                 </div>
