@@ -34,7 +34,7 @@ server.get('/vms', function(req, res, next) {
                 'bookingtime': row.bookingtime,
                 'ansible_facts': row.ansible_facts
             })
-        }, function(err, cntx) {
+        }, function(err) {
             res.json({
                 vms: vms
             })
@@ -47,8 +47,9 @@ server.get('/vms/:host', function(req, res, next) {
     var queryHost = req.params.host
 
     db.serialize(function() {
-        var selectStmt = db.prepare('SELECT * FROM vms WHERE host = (?)')
-        selectStmt.run(queryHost, function(err, row) {
+        var selectStmt = 'SELECT * FROM vms WHERE host = (?)'
+        var params = [ queryHost ]
+        db.get(selectStmt, params, function(err, row) {
             vm = {
                 'id': row.id,
                 'host': row.host,
@@ -59,7 +60,6 @@ server.get('/vms/:host', function(req, res, next) {
                 'bookingtime': row.bookingtime,
                 'ansible_facts': row.ansible_facts
             }
-        }, function(err, cntx) {
             res.json(vm)
         })
     })
