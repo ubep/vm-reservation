@@ -1,48 +1,48 @@
 {
     "vms": [{
-        "host": "epagesj-vm05.intern.epages.de",
+        "host": "teamred-05.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm06.intern.epages.de",
+        "host": "teamred-06.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm07.intern.epages.de",
+        "host": "teamred-07.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm08.intern.epages.de",
+        "host": "teamred-08.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm09.vm-intern.epages.com",
+        "host": "teamred-09.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm10.vm-intern.epages.com",
+        "host": "teamred-10.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm11.vm-intern.epages.com",
+        "host": "teamred-11.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
         "systeminfo": ""
     }, {
-        "host": "epagesj-vm12.vm-intern.epages.com",
+        "host": "teamred-12.vm-intern.epages.com",
         "status": "free",
         "description": "",
         "contact": "",
