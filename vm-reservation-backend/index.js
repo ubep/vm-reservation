@@ -53,7 +53,6 @@ server.get('/vms', function(req, res, next) {
             if (err) {
                 console.log('Database error: ' + err)
             }
-            var row2 =  parseDatabaseRow(row)
             vms.push(parseDatabaseRow(row))
         }, function(err, numRows) {
             if (err) {
