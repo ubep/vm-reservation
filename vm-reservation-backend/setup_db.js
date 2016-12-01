@@ -18,7 +18,11 @@ db.serialize(function() {
 
     db.each('SELECT * FROM vms',
         function(err, row) {
-            console.log(row.id + ': ' + row.host + '(status: ' + row.status + ', description: ' + row.description + ', contact: ' + row.contact + ', systeminfo: ' + row.systeminfo + ', bookingtime: ' + row.bookingtime + ')')
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(row.id + ': ' + row.host + '(status: ' + row.status + ', description: ' + row.description + ', contact: ' + row.contact + ', systeminfo: ' + row.systeminfo + ', bookingtime: ' + row.bookingtime + ')')
+            }
         }
     )
 })

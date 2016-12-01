@@ -1,8 +1,8 @@
 var app = angular.module('vm-reservation', ['ngRoute', 'ngResource', 'ui.bootstrap'])
 
 app.constant('config', {
-    // endpoint: 'http://localhost:3000/'
-    endpoint: 'http://teamred-jenkins.vm-intern.epages.com:3000/'
+    endpoint: 'http://localhost:3000/'
+    // endpoint: 'http://teamred-jenkins.vm-intern.epages.com:3000/'
 })
 
 app.config(function($routeProvider) {
@@ -32,20 +32,11 @@ function prepareBookingDate(vm) {
     }
 }
 
-function prepareFacts(vm) {
-    try {
-        vm.ansible_facts = JSON.parse(vm.ansible_facts)
-    } catch (e) {
-        console.log(e)
-    }
-}
-
 app.controller('vmListController', function(config, $scope, $http, $modal) {
     $http.get(config.endpoint + 'vms').then(function(result) {
         vms = result.data.vms
         for (var i = 0; i < vms.length; i++) {
             prepareBookingDate(vms[i])
-            prepareFacts(vms[i])
         }
 
         $scope.vms = vms

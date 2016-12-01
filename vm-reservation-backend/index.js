@@ -20,21 +20,46 @@ server.use(
     }
 )
 
+function parseDatabaseRow(row) {
+    var ansibleFacts
+    try {
+        ansibleFacts = JSON.parse(row.ansible_facts)
+    } catch (e) {
+        console.log('Could not parse ansible_facts from database: ' + e)
+    }
+    var systeminfo
+    try {
+        systeminfo = JSON.parse(row.systeminfo)
+    } catch (e) {
+        console.log('Could not parse systeminfo from database: ' + e)
+    }
+    var result = {
+        id: row.id,
+        host: row.host,
+        status: row.status,
+        description: row.description,
+        contact: row.contact,
+        systeminfo: systeminfo,
+        bookingtime: row.bookingtime,
+        ansible_facts: ansibleFacts,
+    }
+    return result
+}
+
 server.get('/vms', function(req, res, next) {
-    var vms = []
     db.serialize(function() {
+        var vms = []
         db.each('SELECT * FROM vms', function(err, row) {
-            vms.push({
-                'id': row.id,
-                'host': row.host,
-                'status': row.status,
-                'description': row.description,
-                'contact': row.contact,
-                'systeminfo': row.systeminfo,
-                'bookingtime': row.bookingtime,
-                'ansible_facts': row.ansible_facts
-            })
-        }, function(err) {
+            if (err) {
+                console.log('Database error: ' + err)
+            }
+            var row2 =  parseDatabaseRow(row)
+            vms.push(parseDatabaseRow(row))
+        }, function(err, numRows) {
+            if (err) {
+                res.status(500)
+                res.json({error: err})
+            }
             res.json({
                 vms: vms
             })
@@ -43,23 +68,13 @@ server.get('/vms', function(req, res, next) {
 })
 
 server.get('/vms/:host', function(req, res, next) {
-    var vm = {}
-    var queryHost = req.params.host
-
     db.serialize(function() {
+        var vm = {}
+        var queryHost = req.params.host
         var selectStmt = 'SELECT * FROM vms WHERE host = (?)'
         var params = [ queryHost ]
         db.get(selectStmt, params, function(err, row) {
-            vm = {
-                'id': row.id,
-                'host': row.host,
-                'status': row.status,
-                'description': row.description,
-                'contact': row.contact,
-                'systeminfo': row.systeminfo,
-                'bookingtime': row.bookingtime,
-                'ansible_facts': row.ansible_facts
-            }
+            vm = parseDatabaseRow(row)
             res.json(vm)
         })
     })
@@ -74,15 +89,14 @@ server.put('/vms/:id', function(req, res, next) {
     var status = vm.status
     var description = vm.description
     var contact = vm.contact
-    var systeminfo = vm.systeminfo
     var bookingtime = vm.bookingtime
 
     if (sid != 'undefined' && sid == id) {
         if (host != 'undefined' && status != 'undefined' && description != 'undefined' && contact != 'undefined') {
-            var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), systeminfo=(?), bookingtime=(?) WHERE id=(?)')
-            updateStmt.run(host, status, description, contact, systeminfo, bookingtime, id, function(err) {
+            var updateStmt = db.prepare('UPDATE vms SET host=(?), status=(?), description=(?), contact=(?), bookingtime=(?) WHERE id=(?)')
+            updateStmt.run(host, status, description, contact, bookingtime, id, function(err) {
                 if (err != null) {
-                    console.log('Error in updating vm: ' + err)
+                    console.log('Error when updating vm: ' + err)
                     res.status(400)
                 } else {
                     res.status(204)
@@ -95,14 +109,19 @@ server.put('/vms/:id', function(req, res, next) {
 
 server.put('/vms', function(req, res, next) {
     var payload = req.body
-
     if (payload) {
-        var facts = payload['ansible_facts']
-        var host = facts['ansible_fqdn']
-        var updateStmt = db.prepare('UPDATE vms SET ansible_facts=(?) WHERE host=(?)')
-        updateStmt.run(JSON.stringify(facts), host, function(err) {
+        var ansibleFacts = payload['ansible_facts']
+        var systeminfo = {
+          epages_version: payload['epages_version'],
+          epagesj_version: payload['epagesj_version']
+        }
+        var host = ansibleFacts['ansible_fqdn']
+        var factsAsString = JSON.stringify(ansibleFacts)
+        var systeminfoAsString = JSON.stringify(systeminfo)
+        var updateStmt = db.prepare('UPDATE vms SET ansible_facts=(?), systeminfo=(?) WHERE host=(?)')
+        updateStmt.run(factsAsString, systeminfoAsString, host, function(err) {
             if (err != null) {
-                console.log('Error in updating vm: ' + err)
+                console.log('Error when updating vm: ' + err)
                 res.status(400)
             } else {
                 res.status(204)
